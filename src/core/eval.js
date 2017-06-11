@@ -1,21 +1,25 @@
-import {getExpType, EXP_TYPE} from './exp-util';
+import {
+  getExpType,
+  EXP_TYPE,
+  getFirstExp,
+  isLastExp,
+  getRestExps
+} from './exp-util';
 import {
   getVarValue,
   textOfQuotation,
-  evalAssignment,
-  evalDefinition,
-  evalIf,
   makeProcedure,
   getLambdaParams,
   getLambdaBody,
   beginActions,
-  evalSequence,
   condToIf,
   getOperator,
   getOperands,
   listOfValues
 } from 'common-util';
 import {s_apply} from './apply';
+import {getIfAlternative, getIfConsequent, getIfPredicate} from './if';
+
 
 export function s_eval(exp, env) {
   const type = getExpType(exp);
@@ -47,4 +51,28 @@ export function s_eval(exp, env) {
   }
 }
 
+export function evalAssignment(exp, env) {
+
+}
+
+export function evalDefinition(exp, env) {
+
+}
+
+export function evalIf(exp, env) {
+  if (s_eval(getIfPredicate(exp), env)) {
+    return s_eval(getIfConsequent(exp), env);
+  } else {
+    return s_eval(getIfAlternative(exp), env);
+  }
+}
+
+export function evalSequence(exps, env) {
+  if (isLastExp(exps)) {
+    return s_eval(getFirstExp(exps), env);
+  } else {
+    const s = s_eval(getFirstExp(exps), env);
+    s(evalSequence(getRestExps(exps), env));
+  }
+}
 

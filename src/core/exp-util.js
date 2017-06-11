@@ -15,3 +15,16 @@ export const EXP_TYPE = {
 export function getExpType(exp) {
   return '';
 }
+
+export function getFirstExp(exps) {
+
+}
+
+export function isLastExp(exps) {
+
+}
+
+export function getRestExps(exps) {
+
+}
+
