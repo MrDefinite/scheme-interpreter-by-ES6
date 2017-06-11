@@ -12,16 +12,16 @@ const isDevServer = ENV === 'start';
 
 
 module.exports = function makeWebpackConfig() {
-  var clientConfig = {
+  const clientConfig = {
     entry: isTest ? void 0 : {
-        'app': './app.js'
+        'app': './src/app.js'
       },
     target: 'web',
     context: __dirname,
     output: isTest ? {} : {
         filename: '[name].[hash].js',
         publicPath: '',
-        path: './build'
+        path: path.resolve(__dirname, './build')
       },
     externals: isTest ? {} : {},
 

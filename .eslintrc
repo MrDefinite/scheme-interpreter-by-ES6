@@ -1,0 +1,29 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "globals": {
+    "jQuery": true,
+    "_": true,
+    "matchMedia": true,
+    "Modernizr": true,
+    "angular": true
+  },
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "rules": {
+    "eqeqeq": [
+      2,
+      "smart"
+    ],
+    "curly": 2,
+    "semi": [
+      2,
+      "always"
+    ],
+    "space-infix-ops": 0
+  },
+  "scripts": "src/main/webapp/webclient/**/*.js"
+}
