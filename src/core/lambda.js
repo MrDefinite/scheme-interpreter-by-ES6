@@ -1,16 +1,16 @@
 import {LAMBDA} from './constant';
-import {isTaggedList} from './exp-util';
+import {isTaggedList} from './common-util';
 import {cons, cadr, cddr} from './s-list';
 
 export function isLambda(exp) {
   return isTaggedList(exp, LAMBDA);
 }
 
-export function getLambdaParams(exp) {
+export function lambdaParameters(exp) {
   return cadr(exp);
 }
 
-export function getLambdaBody(exp) {
+export function lambdaBody(exp) {
   return cddr(exp);
 }
 

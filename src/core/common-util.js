@@ -1,109 +1,40 @@
 import {s_eval} from './eval';
-import {cons, cadr, EMPTY_NODE} from './s-list';
+import {cons, car, cadr, cdr} from './s-list';
+import {EMPTY_LIST, QUOTE} from './constant';
+import {makeBegin} from './begin';
 
-export function getVarValue(exp, env) {
-
-}
 
 export function textOfQuotation(exp) {
   return cadr(exp);
 }
 
-export function makeProcedure(lambdaParams, lambdaBody, env) {
-
-}
-
-export function getLambdaParams(exp) {
-
-}
-
-export function getLambdaBody(exp) {
-
-}
-
-export function beginActions(exp) {
-
-}
-
-export function condToIf(exp) {
-
-}
-
-export function getOperator(exp) {
-
-}
-
-export function getAssignmentVar(exp) {
-
-}
-
-export function getAssignmentValue(exp) {
-
-}
-
-export function setVarValue(variable, value, env) {
-
-}
-
-export function getDefinitionVar(exp) {
-
-}
-
-export function getDefinitionValue(exp) {
-
-}
-
-export function defineVar(variable, value, env) {
-
-}
-
 export function listOfValues(exps, env) {
-  if (noOperands(exps)) {
-    return EMPTY_NODE;
+  if (isNoOperands(exps)) {
+    return EMPTY_LIST;
   }
 
   return cons(s_eval(firstOperand(exps), env),
-    listOfValues(restOperand(exps), env));
+    listOfValues(restOperands(exps), env));
 }
 
-export function getOperands(exp) {
-
+export function operator(exp) {
+  return car(exp);
 }
 
-export function firstOperand(exp) {
-
+export function operands(exp) {
+  return cdr(exp);
 }
 
-export function restOperand(exp) {
-
+export function firstOperand(ops) {
+  return car(ops);
 }
 
-export function noOperands(exp) {
-
+export function restOperands(ops) {
+  return cdr(ops);
 }
 
-export function isPrimitiveProcedure(procedure) {
-
-}
-
-export function isCompoundProcedure(procedure) {
-
-}
-
-export function procedureBody(procedure) {
-
-}
-
-export function extendEnv(procedureParams, args, procedureEnv) {
-
-}
-
-export function getProcedureParams(procedure) {
-
-}
-
-export function getProcedureEnv(procedure) {
-
+export function isNoOperands(ops) {
+  return isNull(ops);
 }
 
 export function isPair(exp) {
@@ -118,20 +49,16 @@ export function isNull(exp) {
 
 }
 
-export function getExpType(exp) {
-  return '';
+export function firstExp(seq) {
+  return car(seq);
 }
 
-export function getFirstExp(exps) {
-
+export function isLastExp(seq) {
+  return isNull(cdr(seq));
 }
 
-export function isLastExp(exps) {
-
-}
-
-export function getRestExps(exps) {
-
+export function restExps(seq) {
+  return cdr(seq);
 }
 
 export function isSelfEvaluating(exp) {
@@ -149,7 +76,7 @@ export function isString(exp) {
 
 }
 
-export function isVar(exp) {
+export function isVariable(exp) {
   return isSymbol(exp);
 }
 
@@ -169,3 +96,22 @@ export function isTaggedList(exp, tag) {
   }
 }
 
+
+
+export function sequenceToExp(seq) {
+  if (isNull(seq)) {
+    return seq;
+  } else if (isLastExp(seq)) {
+    return firstExp(seq);
+  } else {
+    return makeBegin(seq);
+  }
+}
+
+export function isTrue(x) {
+  // TODO
+}
+
+export function isFalse(x) {
+  // TODO
+}

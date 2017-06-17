@@ -1,5 +1,5 @@
 import {IF} from './constant';
-import {cadr, caddr, cadddr, cdddr} from './s-list';
+import {list, cadr, caddr, cadddr, cdddr} from './s-list';
 import {isTaggedList, isNull} from './common-util';
 
 
@@ -23,4 +23,6 @@ export function ifAlternative(exp) {
   }
 }
 
-
+export function makeIf(predicate, consequent, alternative) {
+  return list(IF, predicate, consequent, alternative);
+}

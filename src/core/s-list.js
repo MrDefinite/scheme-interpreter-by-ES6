@@ -1,4 +1,3 @@
-import {EMPTY_LIST} from './constant';
 
 class Node {
   constructor(a, b) {
@@ -9,6 +8,26 @@ class Node {
 
 export function cons(a, b) {
   return new Node(a, b);
+}
+
+export function list() {
+  const args = arguments;
+
+  for (let i = 0; i < arguments.length; i++) {
+
+  }
+}
+
+export function setCar(list, value) {
+
+}
+
+export function setCdr(list, value) {
+
+}
+
+export function length(list) {
+
 }
 
 // 0
@@ -58,4 +77,3 @@ export function cadddr(node) {
   return node.second.second.second.first;
 }
 
-export const EMPTY_NODE = EMPTY_LIST;

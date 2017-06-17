@@ -6,10 +6,10 @@ export function isAssignment(exp) {
   return isTaggedList(exp, ASSIGN);
 }
 
-export function assignVar(exp) {
+export function assignmentVariable(exp) {
   return cadr(exp);
 }
 
-export function assignValue(exp) {
+export function assignmentValue(exp) {
   return caddr(exp);
 }

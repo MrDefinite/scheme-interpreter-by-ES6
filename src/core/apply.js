@@ -1,27 +1,27 @@
 import {
+  extendEnvironment,
+} from './environment';
+import {
   isPrimitiveProcedure,
   isCompoundProcedure,
-  evalSequence,
   procedureBody,
-  extendEnv,
-  getProcedureEnv,
-  getProcedureParams
-} from './common-util';
-
+  procedureEnvironment,
+  procedureParameters
+} from './procedure';
+import {evalSequence} from './eval';
+import {applyPrimitiveProcedure} from './procedure';
 
 export function s_apply(procedure, args) {
   if (isPrimitiveProcedure(procedure)) {
     return applyPrimitiveProcedure(procedure, args);
   } else if (isCompoundProcedure(procedure)) {
     return evalSequence(procedureBody(procedure),
-      extendEnv(getProcedureParams(procedure), args,
-        getProcedureEnv(procedure)));
+      extendEnvironment(procedureParameters(procedure), args,
+        procedureEnvironment(procedure)));
   }
   throw 'Unknown procedure type to apply!';
 }
 
-function applyPrimitiveProcedure(procedure) {
 
-}
 
 

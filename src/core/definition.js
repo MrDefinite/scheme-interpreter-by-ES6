@@ -7,7 +7,7 @@ export function isDefinition(exp) {
   return isTaggedList(exp, DEFINITION);
 }
 
-export function defineVar(exp) {
+export function definitionVariable(exp) {
   if (isSymbol(cadr(exp))) {
     return cadr(exp);
   } else {
@@ -15,7 +15,7 @@ export function defineVar(exp) {
   }
 }
 
-export function defineValue(exp) {
+export function definitionValue(exp) {
   if (isSymbol(cadr(exp))) {
     return caddr(exp);
   }  else {
