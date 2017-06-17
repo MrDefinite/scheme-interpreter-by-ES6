@@ -15,11 +15,17 @@ import {
   condToIf,
   getOperator,
   getOperands,
-  listOfValues
+  listOfValues,
+  getAssignmentValue,
+  getAssignmentVar,
+  setVarValue,
+  defineVar,
+  getDefinitionVar,
+  getDefinitionValue
 } from 'common-util';
 import {s_apply} from './apply';
 import {getIfAlternative, getIfConsequent, getIfPredicate} from './if';
-
+import {OK_RETURN} from './constant';
 
 export function s_eval(exp, env) {
   const type = getExpType(exp);
@@ -52,11 +58,13 @@ export function s_eval(exp, env) {
 }
 
 export function evalAssignment(exp, env) {
-
+  setVarValue(getAssignmentVar(exp), getAssignmentValue(exp), env);
+  return OK_RETURN;
 }
 
 export function evalDefinition(exp, env) {
-
+  defineVar(getDefinitionVar(exp), getDefinitionValue(exp), env);
+  return OK_RETURN;
 }
 
 export function evalIf(exp, env) {
