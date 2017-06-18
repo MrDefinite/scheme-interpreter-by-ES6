@@ -96,7 +96,9 @@ export function isTaggedList(exp, tag) {
   }
 }
 
+export function map() {
 
+}
 
 export function sequenceToExp(seq) {
   if (isNull(seq)) {

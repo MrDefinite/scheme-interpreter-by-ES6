@@ -10,4 +10,4 @@ export const BEGIN = 'begin';
 export const COND = 'cond';
 export const ELSE = 'else';
 export const PROCEDURE = 'procedure';
-
+export const PRIMITIVE = 'primitive';

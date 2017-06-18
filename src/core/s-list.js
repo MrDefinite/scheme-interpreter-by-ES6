@@ -1,4 +1,3 @@
-
 class Node {
   constructor(a, b) {
     this.first = a;
@@ -11,23 +10,39 @@ export function cons(a, b) {
 }
 
 export function list() {
-  const args = arguments;
-
-  for (let i = 0; i < arguments.length; i++) {
-
+  const head = new Node(arguments[0], null);
+  let pre = head;
+  for (let i = 1; i < arguments.length; i++) {
+    let n = new Node(arguments[i], null);
+    pre.second = n;
+    pre = n;
   }
+
+  return head;
 }
 
 export function setCar(list, value) {
-
+  const head = list;
+  head.first = value;
 }
 
 export function setCdr(list, value) {
-
+  const head = list;
+  head.second = value;
 }
 
 export function length(list) {
+  if (!list) {
+    return 0;
+  }
 
+  let l = 1;
+  let cur = list;
+  while (cur.second !== null) {
+    l++;
+    cur = cur.second;
+  }
+  return l;
 }
 
 // 0

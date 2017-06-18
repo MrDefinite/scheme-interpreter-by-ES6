@@ -1,5 +1,5 @@
 import {list, caddr, cadddr, cadr} from './s-list';
-import {PROCEDURE} from './constant';
+import {PROCEDURE, PRIMITIVE} from './constant';
 import {isTaggedList} from './common-util';
 
 export function makeProcedure(parameters, body, env) {
@@ -7,10 +7,18 @@ export function makeProcedure(parameters, body, env) {
 }
 
 export function isPrimitiveProcedure(procedure) {
-
+  return isTaggedList(procedure, PRIMITIVE);
 }
 
-export function applyPrimitiveProcedure(procedure) {
+export function primitiveImplementation(procedure) {
+  return cadr(procedure);
+}
+
+export function applyPrimitiveProcedure(procedure, args) {
+  return applyInUnderlyingScheme(primitiveImplementation(procedure), args);
+}
+
+export function applyInUnderlyingScheme(proc, args) {
 
 }
 
@@ -29,3 +37,5 @@ export function procedureParameters(procedure) {
 export function procedureEnvironment(procedure) {
   return cadddr(procedure);
 }
+
+

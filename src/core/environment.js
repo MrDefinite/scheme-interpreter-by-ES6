@@ -1,6 +1,6 @@
-import {cdr, car, cons, setCar, setCdr, length} from "./s-list";
-import {EMPTY_LIST} from './constant';
-import {isNull, isEq} from './common-util';
+import {list, cdr, car, cons, setCar, setCdr, length, cadr} from "./s-list";
+import {EMPTY_LIST, PRIMITIVE} from './constant';
+import {isNull, isEq, map} from './common-util';
 
 export function lookupVariableValue(variable, env) {
   function _envLoop(env) {
@@ -32,12 +32,42 @@ export function extendEnvironment(vars, vals, baseEnv) {
   }
 }
 
-export function defineVariable() {
+export function defineVariable(variable, value, env) {
+  const frame = firstFrame(env);
 
+  function _scan(vars, vals) {
+    if (isNull(vars)) {
+      return addBindingToFrame(variable, value, frame);
+    } else if (isEq(variable, car((vars)))) {
+      return setCar(vals, value);
+    } else {
+      return _scan(cdr(vars), cdr(vals));
+    }
+  }
+
+  return _scan(frameVariables(frame), frameValues(frame));
 }
 
 export function setVariableValue(variable, value, env) {
+  function _envLoop(env) {
+    function _scan(vars, vals) {
+      if (isNull(vars)) {
+        return _envLoop(enclosingEnvironment(env));
+      } else if (isEq(variable, car((vars)))) {
+        return setCar(vals, value);
+      } else {
+        return _scan(cdr(vars), cdr(vals));
+      }
+    }
 
+    if (isEq(env, THE_EMPTY_ENVIRONMENT)) {
+      throw 'Unbound variable var';
+    }
+    const frame = firstFrame(env);
+    return _scan(frameVariables(frame), frameValues(frame));
+  }
+
+  return _envLoop(env);
 }
 
 export function enclosingEnvironment(env) {
@@ -65,6 +95,23 @@ export function addBindingToFrame(variable, value, frame) {
   setCdr(frame, cons(value, cdr(frame)));
 }
 
+export function setupEnvironment() {
+  const initialEnv = extendEnvironment(primitiveProcedureNames,
+    primitiveProcedureObjects, THE_EMPTY_ENVIRONMENT);
+  defineVariable('true', true, initialEnv);
+  defineVariable('false', false, initialEnv);
+  return initialEnv;
+}
+
+const primitiveProcedures = list(list('car', car), list('cdr', cdr), list('cons', cons));
+const primitiveProcedureNames = map(car, primitiveProcedures);
+const primitiveProcedureObjects = map(function(procedure) {
+  return list(PRIMITIVE, cadr(procedure));
+}, primitiveProcedures);
+export const theGlobalEnvironment = setupEnvironment();
+
 export const THE_EMPTY_ENVIRONMENT = EMPTY_LIST;
+
+
 
 
